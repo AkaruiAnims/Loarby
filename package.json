@@ -1,0 +1,19 @@
+{
+  "name": "loarby",
+  "version": "1.0.0",
+  "description": "a digital/virtual assistant ",
+  "main": "main.js",
+  "scripts": {
+    "test": "start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AkaruiAnims/Loarby.git"
+  },
+  "author": "Jerpharney Pastoor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AkaruiAnims/Loarby/issues"
+  },
+  "homepage": "https://github.com/AkaruiAnims/Loarby#readme"
+}
