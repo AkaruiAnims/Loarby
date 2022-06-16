@@ -1,0 +1,26 @@
+{
+  "Constants": [
+      {
+        "api_tokens": [
+            {
+              "discordJs": ""
+            } 
+          ],
+
+        "folder_locations": [
+            {
+              "modules_location": "modules/",
+              "database_files": "databaseConnection/"
+            }  
+          ]
+      }
+    ],
+
+  "Modules": [
+      {
+        "id": "1",
+        "name": "",
+        "location": "discordJs.ts"
+      }
+    ]
+}
