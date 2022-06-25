@@ -19,8 +19,10 @@
   "Modules": [
       {
         "id": "1",
-        "name": "",
-        "location": "discordJs.ts"
+        "name": "Discord Interface",
+        "location": "discordJs",
+        "enabled": "true",
+        "entry_point": "index.ts"
       }
     ]
 }

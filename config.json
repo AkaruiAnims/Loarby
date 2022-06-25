@@ -1,0 +1,29 @@
+{
+  "Constants": [
+      {
+        "api_tokens": [
+            {
+              "discordJs": "'OTc2OTg2NzQ1NDQ5MTExNTc0.G6R3dx.gIio0y725fQEjmYcm0STHj8XWk8we69cIx6HD0'"
+            } 
+          ],
+
+        "folder_locations": [
+            {
+              "modules_location": "modules/",
+              "database_files": "databaseConnection/"
+            }  
+          ]
+      }
+    ],
+
+  "Modules": [
+      {
+        "id": "1",
+        "name": "DiscordJs",
+        "description": "Discord Interface",
+        "location": "discordJs",
+        "enabled": "true",
+        "entry_point": "index.ts"
+      }
+    ]
+}
