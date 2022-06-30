@@ -1,4 +1,4 @@
-.config.json
+*.config.json
 .logs
 .node_modules/
 config.json
