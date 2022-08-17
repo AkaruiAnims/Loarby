@@ -1,9 +1,12 @@
 //Entry point + Initializer 
 import modulesService from "./modules/modules_service.ts";
+import { createRequire } from "https://deno.land/std/node/module.ts";
+
+const require = createRequire(import.meta.url);
 
 class mainInitializer {
       fs = require('fs');
-      config_file = this.fs.readFileSync('config.json'); 
+      config_file = this.fs.readFileSync('config.json', 'utf8'); 
      //db_connection = {};
      //tokens_arr = {};
       active_modules = {};
@@ -23,6 +26,6 @@ class mainInitializer {
     }    
 }
 
-module.exports = mainInitializer; 
+let exports = mainInitializer; 
 const mainEntryPoint = new mainInitializer();
 mainEntryPoint.enableModules()
