@@ -1,7 +1,8 @@
 //Entry point + Initializer 
 import modulesService from "./modules/modules_service.ts";
-import { createRequire } from "https://deno.land/std/node/module.ts";
 
+// comment the lines bellow if using node or bun
+import { createRequire } from "https://deno.land/std/node/module.ts";
 const require = createRequire(import.meta.url);
 
 class mainInitializer {
