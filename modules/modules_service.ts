@@ -1,11 +1,10 @@
-const mainInitializer = require("../main.ts"); 
-
-export default class modulesService extends mainInitializer {
+import { client } from "./discordJs/index";
+class modulesService {
    
     contructor() {
-       this.banana = "banana";
-       return this;
+      return discord = client;
     }
-} 
+}
 
-const modules_service = new modulesService();
+
+export const modules_service = new modulesService();
