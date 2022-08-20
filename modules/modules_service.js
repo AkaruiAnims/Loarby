@@ -1,4 +1,5 @@
-import { client } from "./discordJs/index";
+import { client } from "./discordJs/index.js";
+
 class modulesService {
    
     contructor() {

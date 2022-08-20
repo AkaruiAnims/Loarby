@@ -1,8 +1,8 @@
 //Entry point + Initializer 
-import { modules_service } from "./modules/modules_service";
+import { modules_service } from "./modules/modules_service.js";
+import * as fs from 'fs/promises';
 
-let fs = require('fs');
-let config_file = fs.readFileSync('config.json', 'utf8');
+let config_file = fs.readFile('config.json', 'utf8');
 
 export class mainInitializer {
       

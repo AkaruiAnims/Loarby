@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "a digital/virtual assistant ",
   "main": "main.js",
+  "type": "module",
   "scripts": {
-    "start": "deno run --allow-read --allow-env main.ts"
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",
