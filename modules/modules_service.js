@@ -1,9 +1,7 @@
-import { client } from "./discordJs/index.js";
 
 class modulesService {
    
     contructor() {
-      return discord = client;
     }
 }
 

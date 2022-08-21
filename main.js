@@ -1,33 +1,37 @@
 //Entry point + Initializer 
 import { modules_service } from "./modules/modules_service.js";
-import * as fs from 'fs/promises';
+import * as fs from 'fs';
 
-let config_file = fs.readFile('config.json', 'utf8');
+let config_file = fs.readFileSync('config.json', 'utf8');
 
-export class mainInitializer {
+class mainInitializer {
       
-     //db_connection = {};
-     //tokens_arr = {};
-     //active_modules = {};
+     db_connection = {};
+     token_arr = {};
+     active_modules = {};
+     interface_arr = {};
+     folder_arr = {};
 
-    constructor() {
-         
+    constructor(configs) {
+      this.importConfigs(configs);
+      this.enableInterface();
     }
 
-    importConfigs(config_data) {
-      this.config_data = JSON.parse(this.config_file);
-      this.token_arr = this.config_data.Constants.api_tokens;
-      this.modules_arr = this.config_data.Modules;
-      this.root_folder = this.config_data.Constants.folder_locations;
+    enableInterface () {
+      
+    }
+
+    importConfigs (config_data) {
+      this.parsed_config_data = JSON.parse(config_data);
+      this.token_arr = this.parsed_config_data.Constants.api_tokens;
+      this.interface_arr = this.parsed_config_data.Interfaces;
+      this.folder_arr = this.parsed_config_data.Constants.folder_locations;
       return this;
     }
 
-    enableModules() {
-      //this.modules_service = require('./modules/modules_service.ts');
-      this.modules_service = new modules_service();
-      console.log(this.modules_service); 
+    enableModules (tokens_array) {
+      this.modules_service
     }    
 }
 
-const mainEntryPoint = new mainInitializer();
-mainEntryPoint.enableModules()
+export const mainEntryPoint = new mainInitializer(config_file);
