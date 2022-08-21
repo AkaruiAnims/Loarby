@@ -1,5 +1,6 @@
 //Entry point + Initializer 
 import { modules_service } from "./modules/modules_service.js";
+import { exec } from "child_process";
 import * as fs from 'fs';
 
 let config_file = fs.readFileSync('config.json', 'utf8');
@@ -13,12 +14,25 @@ class mainInitializer {
      folder_arr = {};
 
     constructor(configs) {
-      this.importConfigs(configs);
-      this.enableInterface();
+      this.importConfigs(configs).enableInterface();
     }
 
     enableInterface () {
-      
+      this.interface_arr.forEach(interface_data => {
+        if (interface_data['enabled'] == 'true') {
+         exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`, (error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                return;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                return;
+            }
+            console.log(`stdout: ${stdout}`);
+         }); 
+        }
+      });  
     }
 
     importConfigs (config_data) {
