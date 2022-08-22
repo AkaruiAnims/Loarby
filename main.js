@@ -12,6 +12,7 @@ class mainInitializer {
      active_modules = {};
      interface_arr = {};
      folder_arr = {};
+     active_interface;
 
     constructor(configs) {
       this.importConfigs(configs).enableInterface();
@@ -20,17 +21,22 @@ class mainInitializer {
     enableInterface () {
       this.interface_arr.forEach(interface_data => {
         if (interface_data['enabled'] == 'true') {
-         exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`, (error, stdout, stderr) => {
-            if (error) {
-                console.log(`error: ${error.message}`);
-                return;
-            }
-            if (stderr) {
-                console.log(`stderr: ${stderr}`);
-                return;
-            }
-            console.log(`stdout: ${stdout}`);
-         }); 
+          let interfaceModule = import(`./interfaces/${interface_data.location}/${interface_data.entry_point}`);
+          console.log(`test: ./interfaces/${interface_data.location}/${interface_data.entry_point}`);
+          console.log(`test-2: ${interfaceModule}`);
+          this.active_interface = new interfaceModule(interface_data.token);
+         //exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`).unref();
+         //   , (error, stdout, stderr) => {
+         //    if (error) {
+         //        console.log(`error: ${error.message}`);
+         //        return;
+         //    }
+         //    if (stderr) {
+         //        console.log(`stderr: ${stderr}`);
+         //        return;
+         //    }
+         //    console.log(`stdout: ${stdout}`);
+         // }); 
         }
       });  
     }
