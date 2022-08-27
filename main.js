@@ -39,7 +39,13 @@ class mainInitializer
     {
       this.interface_arr.forEach(interface_data => {
         if (interface_data['enabled'] == 'true') {
-          exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`); 
+          exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point}`, (error) => {
+            let logDate = Date.now()
+            if (error) {
+              fs.appendFileSync('./gen/commandLog.txt',`[ ${logDate} ] ${error}`);
+              return;
+            }
+          }); 
         }
       });  
     }
@@ -63,3 +69,4 @@ class mainInitializer
 
 
 export const mainEntryPoint = new mainInitializer(config_file);
+
