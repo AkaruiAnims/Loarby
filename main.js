@@ -14,7 +14,7 @@ class loarbyUtils
       return this;
     }
 
-    commandLog (logContent, logLocation = './commandLog.txt')
+    commandLog (logContent, logLocation = './gen/commandLog.txt')
     {
       const logDate = new Date().toLocaleString().replace(",","").replace(/:.. /," "); 
 
@@ -83,4 +83,3 @@ class mainInitializer extends loarbyUtils
 
 export const mainEntryPoint = new mainInitializer(config_file);
 export const loarbUtils = new loarbyUtils();
-console.log();

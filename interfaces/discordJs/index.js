@@ -2,6 +2,7 @@
 import { Client, GatewayIntentBits } from 'discord.js';
 import { loarbUtils } from '../../main.js';
 
+const rootDir = process.cwd();
 const client = new Client({ 
   intents: [
     GatewayIntentBits.Guilds,
@@ -23,5 +24,5 @@ client.once('ready', () => {
 
 
 client.on('messageCreate', (message) => {
-  loarbUtils.commandLog(message, `${process.cwd()}/commandLog.txt`); 
+  loarbUtils.commandLog(message, `${rootDir}/commandLog.txt`); 
 });
