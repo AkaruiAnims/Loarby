@@ -6,17 +6,30 @@ import * as fs from 'fs';
 const config_file = fs.readFileSync('config.json', 'utf8');
 
 
-class loarbUtils 
+class loarbyUtils 
 {
-    
-    constructor () {
-        
+    //make a getDate method
+    constructor () 
+    {    
       return this;
     }
+
+    commandLog (logContent, logLocation = './commandLog.txt')
+    {
+      const logDate = new Date().toLocaleString().replace(",","").replace(/:.. /," "); 
+
+      const stream = fs.createWriteStream(logLocation, {flags:'a'});
+
+      stream.write(`[ ${logDate} ] ${logContent}`+"\n");
+      stream.end();
+
+      return this;
+    }
+
 }
 
 
-class mainInitializer 
+class mainInitializer extends loarbyUtils 
 {
       
      db_connection = {};
@@ -30,6 +43,7 @@ class mainInitializer
 
     constructor (configs) 
     {
+      super();
       this.importConfigs(configs).enableInterface();
       //this.enableModules();
     }
@@ -39,10 +53,9 @@ class mainInitializer
     {
       this.interface_arr.forEach(interface_data => {
         if (interface_data['enabled'] == 'true') {
-          exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point}`, (error) => {
-            let logDate = Date.now()
+          exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`, (error) => {
             if (error) {
-              fs.appendFileSync('./gen/commandLog.txt',`[ ${logDate} ] ${error}`);
+              this.commandLog(error, './gen/commandLog.txt')
               return;
             }
           }); 
@@ -69,4 +82,5 @@ class mainInitializer
 
 
 export const mainEntryPoint = new mainInitializer(config_file);
-
+export const loarbUtils = new loarbyUtils();
+console.log();
