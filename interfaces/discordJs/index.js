@@ -24,5 +24,5 @@ client.once('ready', () => {
 
 
 client.on('messageCreate', (message) => {
-  loarbUtils.commandLog(message, `${rootDir}/commandLog.txt`); 
+  loarbUtils.commandLog(message, '[ DiscordJS ]'); 
 });

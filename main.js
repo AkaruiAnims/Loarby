@@ -14,10 +14,10 @@ class loarbyUtils
       return this;
     }
 
-    commandLog (logContent, logLocation = './gen/commandLog.txt')
+    commandLog (logContent, logLabel)
     {
       const logDate = new Date().toLocaleString().replace(",","").replace(/:.. /," "); 
-
+      const  logLocation = './gen/commandLog.txt';
       const stream = fs.createWriteStream(logLocation, {flags:'a'});
 
       stream.write(`[ ${logDate} ] ${logContent}`+"\n");
@@ -52,14 +52,15 @@ class mainInitializer extends loarbyUtils
     enableInterface () 
     {
       this.interface_arr.forEach(interface_data => {
-        if (interface_data['enabled'] == 'true') {
+        if (interface_data['enabled'] == 'true' && interface_data['active'] == 'false') {
           exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`, (error) => {
             if (error) {
-              this.commandLog(error, './gen/commandLog.txt')
+              this.commandLog(error, '[ EnableInterface ]')
               return;
             }
           }); 
         }
+        
       });  
     }
 
