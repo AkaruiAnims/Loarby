@@ -3,26 +3,29 @@
       {
         "api_tokens": [
             {
-              "discordJs": ""
+              "discordJs": "" 
             } 
           ],
 
         "folder_locations": [
             {
+              "Interfaces": "Interface/",
               "modules_location": "modules/",
-              "database_files": "databaseConnection/"
+              "database_files": "database/"
             }  
           ]
       }
     ],
 
-  "Modules": [
+  "Interfaces": [
       {
         "id": "1",
         "name": "Discord Interface",
         "location": "discordJs",
         "enabled": "true",
-        "entry_point": "index.ts"
+        "active": "false",
+        "entry_point": "index.js",
+        "token": ""
       }
     ]
 }

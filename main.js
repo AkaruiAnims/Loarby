@@ -17,10 +17,10 @@ class loarbyUtils
     commandLog (logContent, logLabel)
     {
       const logDate = new Date().toLocaleString().replace(",","").replace(/:.. /," "); 
-      const  logLocation = './gen/commandLog.txt';
+      const logLocation = './gen/commandLog.txt';
       const stream = fs.createWriteStream(logLocation, {flags:'a'});
 
-      stream.write(`[ ${logDate} ] ${logContent}`+"\n");
+      stream.write(`[ ${logDate} ] ${logLabel} ${logContent}`+"\n");
       stream.end();
 
       return this;

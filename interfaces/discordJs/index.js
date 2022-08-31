@@ -14,6 +14,8 @@ const client = new Client({
 const additional_args = process.argv.slice(2);
 const TOKEN = additional_args[0];
 
+let count = 0;
+
 client.login(TOKEN);
 
 
@@ -24,5 +26,8 @@ client.once('ready', () => {
 
 
 client.on('messageCreate', (message) => {
-  loarbUtils.commandLog(message, '[ DiscordJS ]'); 
+  count = count +1;
+  if ( message == "exit" ) { process.exit(3) };
+  console.log(message,`[ DiscordJS ${count} ]`);
+  //loarbUtils.commandLog(message,`[ DiscordJS ${count} ]`); 
 });
