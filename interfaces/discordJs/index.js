@@ -23,11 +23,3 @@ client.once('ready', () => {
  console.log(`Logged in as ${client.user.tag}!`);
 });
 
-
-
-client.on('messageCreate', (message) => {
-  count = count +1;
-  if ( message == "exit" ) { process.exit(3) };
-  console.log(message,`[ DiscordJS ${count} ]`);
-  //loarbUtils.commandLog(message,`[ DiscordJS ${count} ]`); 
-});
