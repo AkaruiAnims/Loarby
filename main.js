@@ -53,25 +53,13 @@ class mainInitializer extends loarbyUtils
     {
       this.interface_arr.forEach(interface_data => {
         if (interface_data['enabled'] == 'true' && interface_data['active'] == 'false') {
-
-          if (interface_data['launch_type'] == 'node') {
-            exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`, (error) => {
-              if (error) {
-                this.commandLog(error, '[ EnableInterface ]')
-                return;
-              }
-            }); 
-          } else if (interface_data['launch_type'] == 'python') {
-            // console.log(`python ./interfaces/${interface_data.location}/${interface_data.entry_point} "${interface_data.token}"`);
-            exec(`python ./interfaces/${interface_data.location}/${interface_data.entry_point} "${interface_data.token}"`, (error) => {
-              if (error) {
-                this.commandLog(error, '[ EnableInterface ]')
-                return;
-              }
-            });
-          }
+          exec(`${interface_data.launch_type} ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`, (error) => {
+            if (error) {
+              this.commandLog(error, '[ EnableInterface ]')
+              return;
+            }
+          }); 
         }
-        
       });  
     }
 
