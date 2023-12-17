@@ -1,10 +1,11 @@
 import discord
 import sys
+import os
 from discord import app_commands
 from discord.ext import commands
 
+ROOT_DIR = os.path.abspath(os.curdir)
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
-
 arguments = sys.argv
 TOKEN = arguments[1]
 
