@@ -60,6 +60,7 @@ class mainInitializer extends loarbyUtils
             }
           }); 
         }
+          console.log(`[ EnableInterface ] ${interface_data.name} has been enabled.`);
       });  
     }
 

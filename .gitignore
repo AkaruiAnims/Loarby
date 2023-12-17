@@ -1,6 +1,3 @@
-config.json
-logs
+logs/
 node_modules/
 config.json
-interfaces/discordJs/commandLog.txt
-gen/commandLog.txt
