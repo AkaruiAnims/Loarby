@@ -17,7 +17,7 @@ class loarbyUtils
     commandLog (logContent, logLabel)
     {
       const logDate = new Date().toLocaleString().replace(",","").replace(/:.. /," "); 
-      const logLocation = './gen/commandLog.txt';
+      const logLocation = './logs/commandLog.txt';
       const stream = fs.createWriteStream(logLocation, {flags:'a'});
 
       stream.write(`[ ${logDate} ] ${logLabel} ${logContent}`+"\n");
@@ -32,13 +32,13 @@ class loarbyUtils
 class mainInitializer extends loarbyUtils 
 {
       
-     db_connection = {};
-     token_arr = {};
-     active_modules = {};
-     interface_arr = {};
-     folder_arr = {};
-     parsed_config_data = {};
-     modules_service = modules_service;
+    db_connection = {};
+    token_arr = {};
+    active_modules = {};
+    interface_arr = {};
+    folder_arr = {};
+    parsed_config_data = {};
+    modules_service = modules_service;
 
 
     constructor (configs) 
@@ -53,12 +53,23 @@ class mainInitializer extends loarbyUtils
     {
       this.interface_arr.forEach(interface_data => {
         if (interface_data['enabled'] == 'true' && interface_data['active'] == 'false') {
-          exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`, (error) => {
-            if (error) {
-              this.commandLog(error, '[ EnableInterface ]')
-              return;
-            }
-          }); 
+
+          if (interface_data['launch_type'] == 'node') {
+            exec(`node ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`, (error) => {
+              if (error) {
+                this.commandLog(error, '[ EnableInterface ]')
+                return;
+              }
+            }); 
+          } else if (interface_data['launch_type'] == 'python') {
+            // console.log(`python ./interfaces/${interface_data.location}/${interface_data.entry_point} "${interface_data.token}"`);
+            exec(`python ./interfaces/${interface_data.location}/${interface_data.entry_point} "${interface_data.token}"`, (error) => {
+              if (error) {
+                this.commandLog(error, '[ EnableInterface ]')
+                return;
+              }
+            });
+          }
         }
         
       });  
