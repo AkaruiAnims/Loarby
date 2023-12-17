@@ -22,4 +22,4 @@ async def sync(interaction: discord.Interaction):
 async def ping( interaction: discord.Interaction ):
     await interaction.response.send_message('Pong!')
 
-bot.run("OTc2OTg2NzQ1NDQ5MTExNTc0.GdjpHo.uLM781A9RBrw9QWhnzghc063aQS0h6ZR-k_6hc")
+bot.run("")
