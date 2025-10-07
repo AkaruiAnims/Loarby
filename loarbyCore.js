@@ -1,26 +1,22 @@
 //Entry point + Initializer 
 import { modules_service } from "./modules/modules_service.js";
-import { exec } from "child_process";
 import * as fs from 'fs';
+import { loarbyCord } from "./loarbyCord";
 
 const commandsList = fs.readFileSync('./constants/commandsList.json', 'utf8');
 
-
+// all the Command commands can be ignored for now
 class loarbyUtils 
 {
     commandsFile = "./commands/commandJs.txt"; 
+    runOnce = false;
 
-    //make a getDate method and keepAlive so it can check for new commands
     constructor () 
     {    
-      this.keepAlive();
     }
 
-    keepAlive ()
+    async Update ()
     {
-      this.keepAlive = setInterval(() => {
-        this.checkCommands();
-      }, 1000);
     }
 
     commandLog (logContent, logLabel)
@@ -86,16 +82,9 @@ class loarbyUtils
     
     shutdown ()
     { 
-      clearInterval(this.keepAlive);
       console.log('[ Shutdown ] Loarby has been shutdown.');
       process.exit();
     }
-
-    noKeepAlive ()
-    {
-      clearInterval(this.keepAlive);
-    }
-
 }
 
 
@@ -118,24 +107,20 @@ class loarbyInitializer extends loarbyUtils
 
       if (initialize == true) {
         this.enableInterface();
-      } else {
-        this.noKeepAlive();
       }
     }
 
-    enableInterface () 
+    enableInterface () //Discord by default 
     {
-      this.interface_arr.forEach(interface_data => {
-        if (interface_data['enabled'] == 'true' && interface_data['active'] == 'false') {
-          exec(`${interface_data.launch_type} ./interfaces/${interface_data.location}/${interface_data.entry_point} ${interface_data.token}`, (error) => {
-            if (error) {
-              this.commandLog(error, '[ EnableInterface ]')
-              return;
-            }
-          }); 
-        }
-          console.log(`[ EnableInterface ] ${interface_data.name} has been enabled.`);
-      });  
+      this.interface_arr.forEach(interface_data => 
+      {
+        if (interface_data['enabled'] == 'true' && interface_data['active'] == 'false') 
+        {
+          const discordBot = new loarbyCord(this.token_arr.discord);
+          discordBot.attachCore(this);
+        } 
+        console.log(`[ EnableInterface ] ${interface_data.name} has been enabled.`);
+      }); 
     }
 
 
@@ -143,9 +128,9 @@ class loarbyInitializer extends loarbyUtils
     {
       let config_data = fs.readFileSync("config.json", 'utf8');
       this.parsed_config_data = JSON.parse(config_data);
-      this.token_arr = this.parsed_config_data.Constants.api_tokens;
+      this.token_arr = this.parsed_config_data.Constants[0].api_tokens[0];
       this.interface_arr = this.parsed_config_data.Interfaces;
-      this.folder_arr = this.parsed_config_data.Constants.folder_locations;
+      this.folder_arr = this.parsed_config_data.Constants[0].folder_locations[0];
     }
 
 
