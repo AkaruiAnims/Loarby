@@ -22,7 +22,7 @@
   "Interfaces": [
       {
         "id": "1",
-        "name": "Discord Interface",
+        "name": "Discord",
         "description": "Discord Interface",
         "launch_type": "python",
         "location": "discord",

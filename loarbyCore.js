@@ -1,9 +1,9 @@
 //Entry point + Initializer 
 import { modules_service } from "./modules/modules_service.js";
 import * as fs from 'fs';
-import { loarbyCord } from "./loarbyCord";
+import { loarbyCord } from "./interfaces/discord/js/loarbyCord.js";
 
-const commandsList = fs.readFileSync('./constants/commandsList.json', 'utf8');
+// const commandsList = fs.readFileSync('./constants/commandsList.json', 'utf8'); // probably don't need this
 
 // all the Command commands can be ignored for now
 class loarbyUtils 
@@ -19,65 +19,10 @@ class loarbyUtils
     {
     }
 
-    commandLog (logContent, logLabel)
-    {
-      const logDate = this.getDate(); 
-      const logLocation = './logs/commandLog.txt';
-      const stream = fs.createWriteStream(logLocation, {flags:'a'});
-
-      stream.write(`[ ${logDate} ] ${logLabel} ${logContent}`+"\n");
-      stream.end();
-    }
-
     getDate ()
     {
       const date = new Date().toLocaleString().replace(",","").replace(/:.. /," "); 
       return date;
-    }
-
-    checkCommands ()
-    {
-      fs.readFile(this.commandsFile, 'utf8', (error, data) => {
-        if (error) {
-          this.commandLog(error, '[ CheckCommands ]');
-          return;
-        }
-
-        if (data != '') {
-          this.runCommand(data);
-          this.commandLog(data, '[ CheckCommands ]');
-          fs.writeFile(this.commandsFile, '', (error) => {
-            if (error) {
-              this.commandLog(error, '[ CheckCommands ]');
-              return;
-            }
-          });
-        }
-      });
-    }
-
-    checkCommandList (command)
-    {
-      const commandList = JSON.parse(commandsList);
-      const commandData = commandList[command];
-
-      if (commandData != undefined) {
-        return commandData;
-      } else {
-        return "Command not found";
-      }
-    }
-
-    runCommand (command)
-    {
-      let commandName = this.checkCommandList(command);
-      if (commandName == "Command not found") {
-        console.log(`[ RunCommand ] ${commandName} not found.`);
-        return;
-      } else {
-      console.log(`[ RunCommand ] ${commandName} has been executed.`);
-        eval(commandName);
-      }
     }
     
     shutdown ()
@@ -97,6 +42,7 @@ class loarbyInitializer extends loarbyUtils
     interface_arr = {};
     folder_arr = {};
     parsed_config_data = {};
+    active_interfaces = {};
     modules_service = modules_service;
 
     constructor (configs, initialize = true) 
@@ -116,13 +62,17 @@ class loarbyInitializer extends loarbyUtils
       {
         if (interface_data['enabled'] == 'true' && interface_data['active'] == 'false') 
         {
-          const discordBot = new loarbyCord(this.token_arr.discord);
-          discordBot.attachCore(this);
+          this.active_interfaces[interface_data['name']] = new loarbyCord(interface_data.token);
+          this.active_interfaces[interface_data['name']].attachCore(this);
         } 
         console.log(`[ EnableInterface ] ${interface_data.name} has been enabled.`);
       }); 
     }
 
+    disableInterface ( interfaceName )
+    {
+
+    }
 
     importConfigs (configs) 
     {
